@@ -10,6 +10,9 @@ if exist ".git" goto temrepo
 echo Primeira vez: ligando esta pasta ao GitHub...
 git init -b main >nul
 git remote add origin https://github.com/VitorTozi/clinica-vanessa-alves.git
+git fetch origin >nul 2>nul
+git reset origin/main >nul 2>nul
+git branch --set-upstream-to=origin/main main >nul 2>nul
 :temrepo
 
 git config user.name >nul 2>nul
