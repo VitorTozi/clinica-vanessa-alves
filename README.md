@@ -8,4 +8,4 @@ Site de apresentação (página única) para a Clínica Vanessa Alves, Castelo-E
 
 Publicado com GitHub Pages a partir da branch `main` (pasta raiz).
 
-Desenvolvido por Vitor Tozi Francischetto.
+Desenvolvido por Vitor Tozi Francischetto e Nicolas Perim.
