@@ -1,0 +1,24 @@
+COMO USAR (Windows)
+===================
+
+1) Instale o Git (uma vez so): https://git-scm.com/download/win
+   Pode deixar todas as opcoes padrao do instalador.
+
+2) Crie o repositorio no GitHub (se ainda nao criou):
+   github.com/new  ->  nome: clinica-vanessa-alves  ->  Public  ->  sem README  ->  Create repository
+
+3) De dois cliques em  publicar-no-github.bat
+   - Na primeira vez ele pede seu nome e e-mail e abre a janela de login do GitHub.
+   - Ele envia o site para: https://github.com/VitorTozi/clinica-vanessa-alves
+
+4) Ligue o site (uma vez so):
+   No repositorio, va em Settings -> Pages -> Source: "Deploy from a branch"
+   -> Branch: main  /  (root)  -> Save.
+   Em 1 a 2 minutos o site fica em: https://vitortozi.github.io/clinica-vanessa-alves/
+
+DEPOIS, NO DIA A DIA
+- atualizar-e-abrir.bat : baixa a versao mais nova do GitHub para o PC (git pull) e abre o site no navegador.
+- publicar-no-github.bat : envia para o GitHub o que mudou nesta pasta (git push) e abre o site publicado.
+
+Observacao: "pull request" e outra coisa (pedido para juntar mudancas entre versoes).
+Para trazer as mudancas para o PC o comando e "git pull", que o atualizar-e-abrir.bat ja faz.
