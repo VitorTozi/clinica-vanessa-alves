@@ -18,7 +18,11 @@ COMO USAR (Windows)
 
 DEPOIS, NO DIA A DIA
 - atualizar-e-abrir.bat : baixa a versao mais nova do GitHub para o PC (git pull) e abre o site no navegador.
-- publicar-no-github.bat : envia para o GitHub o que mudou nesta pasta (git push) e abre o site publicado.
+- publicar-no-github.bat : pede uma descricao, cria uma branch nova, envia para o GitHub e o GitHub
+  ABRE UM PULL REQUEST SOZINHO. Voce (ou o Nicolas) revisa e clica em "Merge pull request";
+  depois do merge o site atualiza em 1 a 2 minutos.
 
-Observacao: "pull request" e outra coisa (pedido para juntar mudancas entre versoes).
-Para trazer as mudancas para o PC o comando e "git pull", que o atualizar-e-abrir.bat ja faz.
+COMO A EQUIPE TRABALHA (Vitor, Nicolas e Claude)
+- Ninguem altera a main direto: toda mudanca vai numa branch e vira um pull request automatico.
+- Todo mundo ve o que mudou em "Pull requests", comenta e aprova.
+- So o merge na main publica o site.

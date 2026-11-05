@@ -1,6 +1,6 @@
 @echo off
 chcp 65001 >nul
-title Publicar site - Clinica Vanessa Alves
+title Enviar alteracoes (pull request) - Clinica Vanessa Alves
 cd /d "%~dp0"
 
 where git >nul 2>nul
@@ -10,6 +10,9 @@ if exist ".git" goto temrepo
 echo Primeira vez: ligando esta pasta ao GitHub...
 git init -b main >nul
 git remote add origin https://github.com/VitorTozi/clinica-vanessa-alves.git
+git fetch origin >nul 2>nul
+git reset origin/main >nul 2>nul
+git branch --set-upstream-to=origin/main main >nul 2>nul
 :temrepo
 
 git config user.name >nul 2>nul
@@ -29,28 +32,46 @@ git config user.email "%GMAIL%"
 :tememail
 
 echo.
-echo Buscando atualizacoes do GitHub antes de enviar...
+echo Buscando a versao mais nova do GitHub...
 git fetch origin >nul 2>nul
 git rev-parse --verify origin/main >nul 2>nul
 if errorlevel 1 goto envia
-git add -A
-git commit -m "Alteracoes locais antes de atualizar" >nul 2>nul
-git pull --rebase origin main
+git stash >nul 2>nul
+git checkout main >nul 2>nul
+git pull --ff-only origin main
+git stash pop >nul 2>nul
 if errorlevel 1 goto conflito
 
 :envia
+echo.
+set /p DESC=Descreva em poucas palavras o que mudou: 
+if "%DESC%"=="" set DESC=Atualizacao do site
+for /f "tokens=1-3 delims=/" %%a in ("%date%") do set HOJE=%%c%%b%%a
+set HORA=%time:~0,2%%time:~3,2%
+set HORA=%HORA: =0%
+set RAMO=atualizacao-%HOJE%-%HORA%
+git checkout -b %RAMO% >nul 2>nul
 git add -A
-git commit -m "Atualiza site (%date% %time:~0,5%)" >nul 2>nul
+git commit -m "%DESC%"
+if errorlevel 1 goto nadamudou
 echo Enviando para o GitHub (pode abrir uma janela de login na primeira vez)...
-git push -u origin main
+git push -u origin %RAMO%
 if errorlevel 1 goto falhou
+git checkout main >nul 2>nul
 
 echo.
 echo ===============================================
-echo  Publicado! Em 1 a 2 minutos o site atualiza em:
-echo  https://vitortozi.github.io/clinica-vanessa-alves/
+echo  Enviado! O GitHub abre um PULL REQUEST sozinho.
+echo  Revise e clique em "Merge pull request" para publicar.
 echo ===============================================
-start "" "https://vitortozi.github.io/clinica-vanessa-alves/"
+start "" "https://github.com/VitorTozi/clinica-vanessa-alves/pulls"
+pause
+exit /b 0
+
+:nadamudou
+git checkout main >nul 2>nul
+git branch -D %RAMO% >nul 2>nul
+echo Nada mudou desde a ultima vez. Nada foi enviado.
 pause
 exit /b 0
 
