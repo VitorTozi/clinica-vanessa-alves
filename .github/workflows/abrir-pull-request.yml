@@ -1,0 +1,35 @@
+# Abre um pull request automaticamente sempre que alguém envia uma branch que não seja a main.
+# Assim toda alteração (de Vitor, de Nicolas ou do Claude) passa por revisão antes de ir para o site.
+name: Abrir pull request automaticamente
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  abrir-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Criar o pull request (se ainda não existir)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          SHA: ${{ github.sha }}
+        run: |
+          existe=$(gh pr list --repo "$REPO" --head "$BRANCH" --state open --json number --jq 'length')
+          if [ "$existe" != "0" ]; then
+            echo "Já existe um pull request aberto para $BRANCH; o commit novo entra nele."
+            exit 0
+          fi
+          titulo=$(gh api "repos/$REPO/commits/$SHA" --jq '.commit.message' | head -n 1)
+          gh pr create --repo "$REPO" --base main --head "$BRANCH" \
+            --title "$titulo" \
+            --body "Aberto automaticamente a partir da branch \`$BRANCH\`.
+
+          **Para publicar:** revise as mudanças em *Files changed* e clique em **Merge pull request**. O site atualiza sozinho em 1 a 2 minutos depois do merge."

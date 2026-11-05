@@ -8,6 +8,15 @@ Site de apresentação (página única) para a Clínica Vanessa Alves, Castelo-E
 
 Publicado com GitHub Pages a partir da branch `main` (pasta raiz): https://vitortozi.github.io/clinica-vanessa-alves/
 
+## Como trabalhamos
+
+Toda alteração passa por **pull request**, para Vitor e Nicolas acompanharem e revisarem:
+
+1. A mudança é feita numa branch nova (nunca direto na `main`).
+2. Ao enviar a branch, o GitHub **abre o pull request sozinho** (`.github/workflows/abrir-pull-request.yml`).
+3. Alguém revisa em *Files changed* e clica em **Merge pull request**.
+4. O merge na `main` publica o site em 1 a 2 minutos.
+
 Para publicar ou atualizar pelo PC, veja `COMO-USAR.txt` (scripts `publicar-no-github.bat` e `atualizar-e-abrir.bat`).
 
 Desenvolvido por Vitor Tozi Francischetto e Nicolas Perim.
